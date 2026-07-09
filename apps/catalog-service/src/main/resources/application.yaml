@@ -1,0 +1,40 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: catalog-service
+  data:
+    mongodb:
+      uri: mongodb://root:password@localhost:27017/catalog?authSource=admin
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        # Nome do canal de saída que usaremos no código
+        productCreated-out-0:
+          destination: product-created-events # Mesmo nome do tópico do inventário
+        inventoryUpdated-in-0:
+          destination: inventory-updated-events
+          group: catalog-group
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434 # Porta padrão do Ollama na sua máquina
+      embedding:
+        options:
+          model: llava
+      chat:
+        options:
+          model: llava # Modelo multimodal para entender imagens
+    vectorstore:
+      mongodb:
+        collection-name: sneaker_vectors
+        index-name: sneaker_vector_index # Nome do índice que criaremos no Mongo
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,48 @@
+#version: '3.8'
+
+services:
+  # O seu microsserviço de Catálogo de Tênis com IA
+  catalog-service:
+    build:
+      context: ../../ # Aponta para a raiz do monorepo para o Docker ler os contexts corretamente
+      dockerfile: apps/catalog-service/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      # Sobrescreve as propriedades do application.yml para apontar para os nomes dos containers do Docker
+      - SPRING_DATA_MONGODB_URI=mongodb://root:password@mongodb:27017/catalog?authSource=admin
+      - SPRING_AI_OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - mongodb
+      - ollama
+    networks:
+      - ecommerce-network
+
+  # Banco NoSQL com busca vetorial
+  mongodb:
+    image: mongodb/mongodb-enterprise-server:7.0-preview
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=root
+      - MONGODB_INITDB_ROOT_PASSWORD=password
+    networks:
+      - ecommerce-network
+
+  # Ollama rodando local para processar o Llava
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: [ "/bin/sh", "-c", "ollama serve & sleep 5 && ollama run llava && tail -f /dev/null" ]
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  ollama_data:

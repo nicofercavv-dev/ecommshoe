@@ -1,0 +1,39 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sneakers_inventory
+    username: root
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Cria as tabelas automaticamente em desenvolvimento
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Configuração do Spring Cloud Stream para o Kafka
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092 # Endereço local do seu cluster Kafka
+      bindings:
+        # Canal de entrada para escutar quando novos produtos forem criados no catálogo
+        productCreated-in-0:
+          destination: product-created-events
+          group: inventory-group
+        # Canal de saída para avisar ao catálogo que o estoque mudou
+        inventoryUpdated-out-0:
+          destination: inventory-updated-events
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -12,7 +12,7 @@ public class SearchProductsByImageUseCase {
     private final CustomProductRepository repository;
     private final OllamaEmbeddingAdapter ollamaEmbeddingAdapter;
 
-    public SearchProductsByImageUseCase(MongoProductRepository repository, OllamaEmbeddingAdapter ollamaEmbeddingAdapter) {
+    public SearchProductsByImageUseCase(CustomProductRepository repository, OllamaEmbeddingAdapter ollamaEmbeddingAdapter) {
         this.repository = repository;
         this.ollamaEmbeddingAdapter = ollamaEmbeddingAdapter;
     }

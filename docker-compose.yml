@@ -1,5 +1,3 @@
-#version: '3.8'
-
 services:
   # 1. SERVER DISCOVERY (EUREKA) - O primeiro a subir
   discovery-server:

@@ -112,6 +112,19 @@ services:
     networks:
       - ecommerce-network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.0
+    container_name: keycloak
+    ports:
+      - "8083:8083"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=dev-file # Banco embarcado para desenvolvimento rápido
+    command: start-dev
+    networks:
+      - ecommerce-network
+
 networks:
   ecommerce-network:
     driver: bridge

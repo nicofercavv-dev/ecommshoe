@@ -1,12 +1,12 @@
 server:
-  port: 8084
+  port: 8085
 
 spring:
   application:
-    name: user-service
+    name: store-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ecommshoe_users
+    url: jdbc:postgresql://localhost:5432/ecommshoe_stores
     username: root
     password: password
     driver-class-name: org.postgresql.Driver

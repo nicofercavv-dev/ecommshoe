@@ -17,6 +17,21 @@ spring:
           predicates:
             - Path=/api/inventory/**
 
+        - id: user-service-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+
+        - id: store-service-route
+          uri: lb://STORE-SERVICE
+          predicates:
+            - Path=/api/stores/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8083/realms/ecommshoe
+
 eureka:
   client:
     service-url:

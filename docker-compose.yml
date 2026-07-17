@@ -116,11 +116,11 @@ services:
     image: quay.io/keycloak/keycloak:26.7.0
     container_name: keycloak
     ports:
-      - "8083:8083"
+      - "8083:8080"
     environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_DB=dev-file # Banco embarcado para desenvolvimento rápido
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=dev-file
     command: start-dev
     networks:
       - ecommerce-network

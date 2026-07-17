@@ -4,8 +4,6 @@ import com.nicofercavv.catalog_service.domain.model.Sneaker;
 import com.nicofercavv.catalog_service.domain.model.SneakerVariation;
 import com.nicofercavv.catalog_service.domain.usecase.CreateProductUseCase;
 import com.nicofercavv.catalog_service.domain.usecase.SearchProductsByImageUseCase;
-import com.nicofercavv.catalog_service.infrastructure.messaging.ProductEventPublisher;
-import com.nicofercavv.catalog_service.infrastructure.messaging.dto.ProductCreatedEvent;
 import com.nicofercavv.catalog_service.infrastructure.repository.MongoProductRepository;
 import com.nicofercavv.catalog_service.infrastructure.web.dto.CreateProductRequest;
 import jakarta.validation.Valid;
